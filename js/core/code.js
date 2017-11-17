@@ -29,7 +29,7 @@
       id: "code",
       icon: "code", 
       title : "Switch between Code and Graphical Designer", 
-      order: 0, 
+      order: 0,
       area: {
         name: "code",
         position: "bottom"

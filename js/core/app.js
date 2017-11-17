@@ -114,6 +114,7 @@
       $(".split-pane").splitster({
         orientation: "vertical", //TODO: Load from local storage,
         barWidth: 0, // Don't show the bar when vertical,
+        splitPos: 30,
         draggable: ".editor--code > .sidebar"
       });
 

@@ -15,7 +15,7 @@
   var codeMirrorDirty = false;
 
   function init() {
-    $('<div id="divcode" style="width:100%;height:100%;"><textarea id="code" name="code"></textarea></div>').appendTo(".editor--code .editor__canvas");
+    $('<div id="divcode" style="display:none;width:100%;height:100%;"><textarea id="code" name="code"></textarea></div>').appendTo(".editor--code .editor__canvas");
     // The code editor
     var lintFlags = {
       esversion   : 6,    // Enable ES6 for literals, arrow fns, binary

@@ -8,6 +8,8 @@
     <script type="text/javascript" src="javascript_compressed.js"></script>
     <script type="text/javascript" src="blockly_espruino.js"></script>
     <script type="text/javascript" src="blockly_graphics.js"></script>
+    <script type="text/javascript" src="blockly_input.js"></script>
+    <script type="text/javascript" src="blockly_output.js"></script>
     <script type="text/javascript" src="blockly_robot.js"></script>
     <script type="text/javascript" src="blockly_amperka_motorshield.js"></script>
     <script type="text/javascript" src="blockly_ble.js"></script>
@@ -247,12 +249,21 @@
         </value>
       </block>
     </category>
-    <category name="Variables">
+    <category name="Data">
       <block type="variables_set" inline="false"  >
         <title name="VAR">item</title>
       </block>
       <block type="variables_get"  >
         <title name="VAR">item</title>
+      </block>
+
+      <block type="math_change">
+        <title name="VAR">item</title>
+        <value name="DELTA">
+          <block type="math_number">
+            <title name="NUM">1</title>
+          </block>
+        </value>
       </block>
     </category>
     <!--<category name="Procedures">
@@ -269,38 +280,24 @@
       </block>
       TODO - need to auto-add calls here??
     </category> -->
-    <category name="Espruino">
-      <block type="espruino_getTime"></block>
-      <block type="espruino_pin"></block>
-      <block type="espruino_watch">
-        <value name="PIN"><block type="espruino_pin"><title name="PIN">BTN1</title></block></value>
+
+    <category name="Input">
+      <block type="espruino_watch_buttons">
       </block>
-      <block type="espruino_digitalWrite">
-        <value name="PIN"><block type="espruino_pin"><title name="PIN">LED1</title></block></value>
-      </block>
-      <block type="espruino_digitalPulse">
-        <value name="PIN"><block type="espruino_pin"><title name="PIN">LED1</title></block></value>
-        <value name="VAL"><block type="logic_boolean"><title name="BOOL">TRUE</title></block></value>
-        <value name="TIME"><block type="math_number"><title name="NUM">100</title></block></value>
-      </block>
-      <block type="espruino_digitalRead">
-        <value name="PIN"><block type="espruino_pin"><title name="PIN">BTN1</title></block></value>
-      </block>
-      <block type="espruino_analogWrite">
-        <value name="PIN"><block type="espruino_pin"><title name="PIN">A1</title></block></value>
-      </block>
-      <block type="espruino_analogRead">
-        <value name="PIN"><block type="espruino_pin"><title name="PIN">A0</title></block></value>
-      </block>
-      <block type="espruino_pinMode">
-        <value name="PIN"><block type="espruino_pin"><title name="PIN">D0</title></block></value>
-      </block>
-      <block type="espruino_code">
-      </block>
-      <block type="espruino_jsexpression">
-      </block>
+
+      <block type="espruino_touch_amount"></block>
     </category>
-    <category name="Hardware">
+
+
+    <category name="Output">
+      <block type="espruino_nfc_url">
+        <value name="url"><block type="text"><title name="TEXT">https://dmccarthy-dev.github.io/EspruinoWebIDE/</title></block></value>
+      </block>
+
+      <block type="espruino_leds"></block>
+    </category>
+
+    <!--category name="Hardware">
       <block type="hw_servoMove">
         <value name="PIN"><block type="espruino_pin"><title name="PIN">B13</title></block></value>
         <value name="VAL"><block type="math_number"><title name="NUM">1</title></block></value>
@@ -312,8 +309,76 @@
         <value name="TRIG"><block type="espruino_pin"><title name="PIN">B4</title></block></value>
         <value name="ECHO"><block type="espruino_pin"><title name="PIN">B3</title></block></value>
       </block>
+    </category-->
+
+    <category name="Graphics (Screen)" >
+      <block type="graphics_getHeight"></block>
+      <block type="graphics_getWidth"></block>
+      <block type="graphics_clearScreen"></block>
     </category>
-    <category name="Graphics">
+
+    <category name="Graphics (Text)" >
+      <block type="graphics_printText">
+        <value name="TEXT"><block type="text"><title name="TEXT">Hello Espruino</title></block></value>
+      </block>
+      <block type="graphics_setFontSize">
+        <value name="size"><block type="math_number"><title name="NUM">10</title></block></value>
+      </block>
+      <block type="graphics_getStringWidth">
+        <value name="text"><block type="text"><title name="TEXT">Hello Espruino</title></block></value>
+      </block>
+      <block type="graphics_drawString">
+        <value name="text"><block type="text"><title name="TEXT">Hello Espruino</title></block></value>
+        <value name="x"><block type="math_number"><title name="NUM">10</title></block></value>
+        <value name="y"><block type="math_number"><title name="NUM">10</title></block></value>
+      </block>
+    </category>
+    <category name="Graphics (Lines)" >
+      <block type="graphics_moveTo">
+        <value name="x"><block type="math_number"><title name="NUM">0</title></block></value>
+        <value name="y"><block type="math_number"><title name="NUM">0</title></block></value>
+      </block>
+      <block type="graphics_lineTo">
+        <value name="x"><block type="math_number"><title name="NUM">50</title></block></value>
+        <value name="y"><block type="math_number"><title name="NUM">50</title></block></value>
+      </block>
+      <block type="graphics_coord">
+        <value name="x"><block type="math_number"><title name="NUM">0</title></block></value>
+        <value name="y"><block type="math_number"><title name="NUM">0</title></block></value>
+      </block>
+      <block type="graphics_fillPoly">
+        <value name="coordlist">
+          <block type="lists_create_with" inline="false"  >
+            <mutation items="4"></mutation>
+          </block>
+        </value>
+      </block>
+    </category>
+    <category name="Graphics (Shapes)" >
+      <block type="graphics_drawCircle">
+        <value name="x"><block type="math_number"><title name="NUM">100</title></block></value>
+        <value name="y"><block type="math_number"><title name="NUM">50</title></block></value>
+        <value name="radius"><block type="math_number"><title name="NUM">20</title></block></value>
+      </block>
+      <block type="graphics_fillCircle">
+        <value name="x"><block type="math_number"><title name="NUM">100</title></block></value>
+        <value name="y"><block type="math_number"><title name="NUM">50</title></block></value>
+        <value name="radius"><block type="math_number"><title name="NUM">20</title></block></value>
+      </block>
+      <block type="graphics_drawRect">
+        <value name="x"><block type="math_number"><title name="NUM">10</title></block></value>
+        <value name="y"><block type="math_number"><title name="NUM">10</title></block></value>
+        <value name="width" ><block type="math_number"><title name="NUM">30</title></block></value>
+        <value name="height"><block type="math_number"><title name="NUM">30</title></block></value>
+      </block>
+      <block type="graphics_fillRect">
+        <value name="x"><block type="math_number"><title name="NUM">10</title></block></value>
+        <value name="y"><block type="math_number"><title name="NUM">10</title></block></value>
+        <value name="width" ><block type="math_number"><title name="NUM">30</title></block></value>
+        <value name="height"><block type="math_number"><title name="NUM">30</title></block></value>
+      </block>
+    </category>
+    <!--category name="Graphics (Screen)" >
       <block type="graphics_getHeight"></block>
       <block type="graphics_getWidth"></block>
       <block type="graphics_clearScreen"></block>
@@ -349,20 +414,20 @@
         <block type="graphics_setFontSize">
             <value name="size"><block type="math_number"><title name="NUM">10</title></block></value>
         </block>
-    </category>
-    <category name="Robot" enable_if="robot">
+    </category-->
+    <!--category name="Robot" enable_if="robot">
       <block type="robot_motor"></block>
       <block type="robot_led"></block>
       <block type="robot_ldr"></block>
-    </category>
+    </category-->
     <!-- Amperka's MotorShield -->
-    <category name="MotorShield" enable_if="motorshield">
+    <!--category name="MotorShield" enable_if="motorshield">
       <block type="amperka_motorshield_motor"></block>
       <block type="amperka_motorshield_motor_dir"></block>
-    </category>
+    </category-->
     <!-- /Amperka's MotorShield -->
 
-    <category name="Bluetooth" enable_if="bluetooth">
+    <!--category name="Bluetooth" enable_if="bluetooth">
       <block type="ble_connected"></block>
       <block type="ble_disconnected"></block>
 
@@ -378,14 +443,46 @@
       <block type="ble_write"></block>
       <block type="ble_onwritten"></block>
       <block type="ble_value"></block>
+    </category-->
+    <category name="More Blocks" custom="PROCEDURE"></category>
+    <category name="Advanced">
+      <block type="espruino_getTime"></block>
+      <block type="espruino_pin"></block>
+      <block type="espruino_watch">
+        <value name="PIN"><block type="espruino_pin"><title name="PIN">BTN1</title></block></value>
+      </block>
+      <!--block type="espruino_led">
+        <value name="PIN"><block type="espruino_led"><title name="LED">1</title></block></value>
+      </block-->
+      <block type="espruino_digitalWrite">
+        <value name="PIN"><block type="espruino_pin"><title name="PIN">LED1</title></block></value>
+      </block>
+      <block type="espruino_digitalPulse">
+        <value name="PIN"><block type="espruino_pin"><title name="PIN">LED1</title></block></value>
+        <value name="VAL"><block type="logic_boolean"><title name="BOOL">TRUE</title></block></value>
+        <value name="TIME"><block type="math_number"><title name="NUM">100</title></block></value>
+      </block>
+      <block type="espruino_digitalRead">
+        <value name="PIN"><block type="espruino_pin"><title name="PIN">BTN1</title></block></value>
+      </block>
+      <block type="espruino_analogWrite">
+        <value name="PIN"><block type="espruino_pin"><title name="PIN">A1</title></block></value>
+      </block>
+      <block type="espruino_analogRead">
+        <value name="PIN"><block type="espruino_pin"><title name="PIN">A0</title></block></value>
+      </block>
+      <block type="espruino_pinMode">
+        <value name="PIN"><block type="espruino_pin"><title name="PIN">D0</title></block></value>
+      </block>
+      <block type="espruino_code">
+      </block>
+      <block type="espruino_jsexpression">
+      </block>
     </category>
-    <category name="Functions" custom="PROCEDURE"></category>
   </xml>
 
     <!-- Blockly initial code -->
-<xml id="blocklyInitial" style="display: none">
-  <block type="espruino_watch" inline="true"  ><title name="EDGE">rising</title><value name="PIN"><block type="espruino_pin"><title name="PIN">BTN1</title></block></value><statement name="DO"><block type="espruino_digitalWrite" inline="true"><value name="PIN"><block type="espruino_pin"><title name="PIN">LED1</title></block></value><value name="VAL"><block type="logic_boolean"><title name="BOOL">TRUE</title></block></value><next><block type="espruino_timeout" inline="true"><value name="SECONDS"><block type="math_number"><title name="NUM">1</title></block></value><statement name="DO"><block type="espruino_digitalWrite" inline="true"><value name="PIN"><block type="espruino_pin"><title name="PIN">LED1</title></block></value><value name="VAL"><block type="logic_boolean"><title name="BOOL">FALSE</title></block></value></block></statement></block></next></block></statement></block>
-</xml>
+  <xml id="blocklyInitial" style="display: none"><block type="espruino_watch_buttons" id="12" x="-188" y="200"><field name="BUTTON">BTN1</field><field name="EDGE">rising</field><statement name="DO"><block type="graphics_printText" id="40" inline="true"><value name="TEXT"><block type="text" id="41"><field name="TEXT">Hello Dojo</field></block></value></block></statement><next><block type="espruino_watch_buttons" id="43"><field name="BUTTON">BTN2</field><field name="EDGE">rising</field><statement name="DO"><block type="graphics_clearScreen" id="71"></block></statement></block></next></block></xml>
 
   </body>
 </html>

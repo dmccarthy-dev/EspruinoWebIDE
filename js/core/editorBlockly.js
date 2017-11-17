@@ -43,7 +43,7 @@
       name : "Overwrite JavaScript with Graphical Editor",
       description : "When you click 'Send to Espruino', should the code from the Graphical Editor overwrite the JavaScript code in the editor window?",
       type : "boolean",
-      defaultValue : false, 
+      defaultValue : true,
     });          
    
     Espruino.Core.Config.add("BLOCKLY_LANGUAGE", {
@@ -64,7 +64,7 @@
     Espruino.addProcessor("initialised", function(data,callback) {
       var blocklyUrl = "blockly/blockly.html?lang="+Espruino.Config.BLOCKLY_LANGUAGE;
       blocklyUrl += "&Enable="+encodeURIComponent(Espruino.Config.BLOCKLY_EXTENSIONS);
-      $('<iframe id="divblockly" class="blocky" style="display:none;border:none;" src="'+blocklyUrl+'"></iframe>').appendTo(".editor--code .editor__canvas");
+      $('<iframe id="divblockly" class="blocky" style="display:block;border:none;" src="'+blocklyUrl+'"></iframe>').appendTo(".editor--code .editor__canvas");
     });
 
     // Handle the 'sending' processor so we can update the JS if we need to...

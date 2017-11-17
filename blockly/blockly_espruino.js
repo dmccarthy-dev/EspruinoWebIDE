@@ -67,7 +67,8 @@ var PINS = [
       ["LED1", 'LED1'],
       ["LED2", 'LED2'],
       ["LED3", 'LED3'],
-      ["BTN1", 'BTN1']];
+    ["BTN1", 'BTN1'],
+    ["CORNER4", 'CORNER4']];
 for (var p in PORTS)
   for (var i=0;i<16;i++) {
     var pinname = PORTS[p]+i;
@@ -109,6 +110,7 @@ Blockly.Blocks.espruino_timeout = {
     this.setTooltip(Blockly.Msg.ESPRUINO_AFTER_TOOLTIP);
   }
 };
+
 Blockly.Blocks.espruino_interval = {
   category: 'Espruino',
   init: function() {
