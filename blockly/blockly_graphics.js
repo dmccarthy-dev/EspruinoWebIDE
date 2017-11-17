@@ -10,40 +10,47 @@
  ------------------------------------------------------------------
 **/
 
-// // --------------------------------- Blockly init code - see /js/core/editorBlockly.js
-// window.onload = function() {
-//   var toolbox = document.getElementById('toolbox');
-//   // Remove any stuff we don't want from the toolbox...
-//   for (var i=0;i<toolbox.children.length;i++) {
-//     var enable_if = toolbox.children[i].attributes["enable_if"];
-//     if (enable_if) {
-//       var keep = false;
-//       if (window.location.search && window.location.search.indexOf("%7C"+enable_if.value+"%7C")>=0)
-//         keep = true;
-//       if (!keep) {
-//         toolbox.removeChild(toolbox.children[i]);
-//         i--;
-//       }
-//     }
-//   }
-//   // Set up blockly from toolbox
-//   Blockly.inject(document.body,{path: '', toolbox: toolbox});
-//   // Set up initial code
-//   Blockly.Xml.domToWorkspace(Blockly.mainWorkspace, document.getElementById('blocklyInitial'));
-//   // Notify parent
-//   window.parent.blocklyLoaded(Blockly, window); // see core/editorBlockly.js
-// };
 
-/* TODO: Looks like we could use Blockly.JavaScript.indentLines(code, Blockly.JavaScript.INDENT)
-to properly sort out the padding of all this stuff */
-
-Blockly.Msg.ESPRUINO_GRAPHICS_PRINTTEXT   = 'printText Text';
+Blockly.Msg.ESPRUINO_GRAPHICS_PRINTTEXT   = 'printText';
 Blockly.Msg.ESPRUINO_GRAPHICS_CLEARSCREEN = 'clearScreen';
+Blockly.Msg.ESPRUINO_GRAPHICS_GET_HEIGHT  = 'getScreenHeight';
+Blockly.Msg.ESPRUINO_GRAPHICS_GET_WIDTH   = 'getScreenWidth';
 
 Blockly.Msg.ESPRUINO_GRAPHICS_x = 'x';
 Blockly.Msg.ESPRUINO_GRAPHICS_y = 'y';
+Blockly.Msg.ESPRUINO_GRAPHICS_RADIUS = 'radius';
 
 var GRAPHICS_COL = 130;
+
+Blockly.Blocks.graphics_getHeight = {
+    category: 'Graphics',
+    init: function() {
+
+        this.appendDummyInput()
+            .appendField( Blockly.Msg.ESPRUINO_GRAPHICS_GET_HEIGHT );
+
+        this.setOutput(true, 'Number');
+        this.setColour(GRAPHICS_COL);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.Msg.ESPRUINO_VALUE);
+    }
+};
+
+
+Blockly.Blocks.graphics_getWidth = {
+    category: 'Graphics',
+    init: function() {
+
+        this.appendDummyInput()
+            .appendField( Blockly.Msg.ESPRUINO_GRAPHICS_GET_WIDTH );
+
+        this.setOutput(true, 'Number');
+        this.setColour(GRAPHICS_COL);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.Msg.ESPRUINO_VALUE);
+    }
+};
+
 
 Blockly.Blocks.graphics_clearScreen = {
     category: 'Graphics',
@@ -79,9 +86,11 @@ Blockly.Blocks.graphics_printText = {
 Blockly.Blocks.graphics_moveTo = {
     category: 'Graphics',
     init: function() {
+        this.appendDummyInput()
+            .appendField('moveTo');
         this.appendValueInput('x')
             .setCheck(['Number'])
-            .appendField(  'move To ' + Blockly.Msg.ESPRUINO_GRAPHICS_x );
+            .appendField( Blockly.Msg.ESPRUINO_GRAPHICS_x );
         this.appendValueInput('y')
             .setCheck(['Number'])
             .appendField( Blockly.Msg.ESPRUINO_GRAPHICS_y );
@@ -98,9 +107,11 @@ Blockly.Blocks.graphics_moveTo = {
 Blockly.Blocks.graphics_lineTo = {
     category: 'Graphics',
     init: function() {
+        this.appendDummyInput()
+            .appendField('lineTo');
         this.appendValueInput('x')
             .setCheck(['Number'])
-            .appendField( 'line To ' + Blockly.Msg.ESPRUINO_GRAPHICS_x );
+            .appendField( Blockly.Msg.ESPRUINO_GRAPHICS_x );
         this.appendValueInput('y')
             .setCheck(['Number'])
             .appendField( Blockly.Msg.ESPRUINO_GRAPHICS_y );
@@ -114,10 +125,125 @@ Blockly.Blocks.graphics_lineTo = {
 };
 
 
+Blockly.Blocks.graphics_drawCircle = {
+    category: 'Graphics',
+    init: function() {
+        this.appendDummyInput()
+            .appendField('drawCircle');
+        this.appendValueInput('x')
+            .setCheck(['Number'])
+            .appendField( Blockly.Msg.ESPRUINO_GRAPHICS_x );
+        this.appendValueInput('y')
+            .setCheck(['Number'])
+            .appendField( Blockly.Msg.ESPRUINO_GRAPHICS_y );
+        this.appendValueInput('radius')
+            .setCheck(['Number'])
+            .appendField( Blockly.Msg.ESPRUINO_GRAPHICS_RADIUS );
+
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setColour(GRAPHICS_COL);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.Msg.ESPRUINO_VALUE);
+    }
+};
+
+
+Blockly.Blocks.graphics_fillCircle = {
+    category: 'Graphics',
+    init: function() {
+
+        this.appendDummyInput()
+            .appendField('fillCircle');
+        this.appendValueInput('x')
+            .setCheck(['Number'])
+            .appendField( Blockly.Msg.ESPRUINO_GRAPHICS_x );
+        this.appendValueInput('y')
+            .setCheck(['Number'])
+            .appendField( Blockly.Msg.ESPRUINO_GRAPHICS_y );
+        this.appendValueInput('radius')
+            .setCheck(['Number'])
+            .appendField( Blockly.Msg.ESPRUINO_GRAPHICS_RADIUS );
+
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setColour(GRAPHICS_COL);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.Msg.ESPRUINO_VALUE);
+    }
+};
+
+
+
+Blockly.Blocks.graphics_drawString = {
+    category: 'Graphics',
+    init: function() {
+
+        this.appendDummyInput()
+            .appendField('drawString');
+        this.appendValueInput('text')
+            .setCheck(['Text'])
+            .appendField( 'text' );
+        this.appendValueInput('x')
+            .setCheck(['Number'])
+            .appendField( Blockly.Msg.ESPRUINO_GRAPHICS_x );
+        this.appendValueInput('y')
+            .setCheck(['Number'])
+            .appendField( Blockly.Msg.ESPRUINO_GRAPHICS_y );
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setColour(GRAPHICS_COL);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.Msg.ESPRUINO_VALUE);
+    }
+};
+
+
+Blockly.Blocks.graphics_getStringWidth = {
+    category: 'Graphics',
+    init: function() {
+
+        this.appendDummyInput()
+            .appendField( 'getStringWidth' );
+        this.appendValueInput('text')
+            .appendField( 'text' );
+
+        this.setOutput(true, 'Number');
+        this.setColour(GRAPHICS_COL);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.Msg.ESPRUINO_VALUE);
+    }
+};
+
+
+Blockly.Blocks.graphics_setFontSize = {
+    category: 'Graphics',
+    init: function() {
+
+        this.appendDummyInput()
+            .appendField('setFontSize');
+        this.appendValueInput('size')
+            .setCheck(['Number'])
+            .appendField( 'size' );
+        this.setPreviousStatement(true);
+        this.setNextStatement(true);
+        this.setColour(GRAPHICS_COL);
+        this.setInputsInline(true);
+        this.setTooltip(Blockly.Msg.ESPRUINO_VALUE);
+    }
+};
+
 // -----------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
 // -----------------------------------------------------------------------------------
+Blockly.JavaScript.graphics_getHeight = function() {
+    return ["g.getHeight() \n", Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+Blockly.JavaScript.graphics_getWidth = function() {
+    return ["g.getWidth() \n", Blockly.JavaScript.ORDER_ATOMIC];
+};
 
 Blockly.JavaScript.graphics_clearScreen = function() {
     return "g.clear(); \n"+
@@ -152,11 +278,76 @@ Blockly.JavaScript.graphics_moveTo = function() {
 Blockly.JavaScript.graphics_lineTo = function() {
 
     var x = Blockly.JavaScript.valueToCode(this, 'x',
+        Blockly.JavaScript.ORDER_NONE) || 100;
+    var y = Blockly.JavaScript.valueToCode(this, 'y',
+        Blockly.JavaScript.ORDER_NONE) || 50;
+    var radius = Blockly.JavaScript.valueToCode(this, 'radius',
+        Blockly.JavaScript.ORDER_NONE) || 20;
+
+    return "g.lineTo(" + x + ", " + y + "); \n" +
+        "g.flip();\n";
+};
+
+
+Blockly.JavaScript.graphics_drawCircle = function() {
+
+    var x = Blockly.JavaScript.valueToCode(this, 'x',
+        Blockly.JavaScript.ORDER_NONE) || 100;
+    var y = Blockly.JavaScript.valueToCode(this, 'y',
+        Blockly.JavaScript.ORDER_NONE) || 50;
+    var radius = Blockly.JavaScript.valueToCode(this, 'radius',
+        Blockly.JavaScript.ORDER_NONE) || 20;
+
+    return "g.drawCircle(" + x + ", " + y + ", " + radius + "); \n" +
+        "g.flip();\n";
+};
+
+
+Blockly.JavaScript.graphics_fillCircle = function() {
+
+    var x = Blockly.JavaScript.valueToCode(this, 'x',
+        Blockly.JavaScript.ORDER_NONE) || 0;
+    var y = Blockly.JavaScript.valueToCode(this, 'y',
+        Blockly.JavaScript.ORDER_NONE) || 0;
+    var radius = Blockly.JavaScript.valueToCode(this, 'radius',
+        Blockly.JavaScript.ORDER_NONE) || 20;
+
+    return "g.fillCircle(" + x + ", " + y + ", " + radius + "); \n" +
+        "g.flip();\n";
+};
+
+
+
+Blockly.JavaScript.graphics_drawString = function() {
+
+    var text = Blockly.JavaScript.valueToCode(this, 'text',
+        Blockly.JavaScript.ORDER_NONE) || '"Hello Espruino"';
+    var x = Blockly.JavaScript.valueToCode(this, 'x',
         Blockly.JavaScript.ORDER_NONE) || 0;
     var y = Blockly.JavaScript.valueToCode(this, 'y',
         Blockly.JavaScript.ORDER_NONE) || 0;
 
-    return "g.lineTo(" + x + ", " + y + "); \n" +
+    return "g.drawString(" + text + "," + x + ", " + y + "); \n" +
         "g.flip();\n";
+};
+
+
+
+Blockly.JavaScript.graphics_getStringWidth = function() {
+
+    var text = Blockly.JavaScript.valueToCode(this, 'text',
+        Blockly.JavaScript.ORDER_NONE) || '""';
+
+    return ["g.stringWidth(" + text + ") \n", Blockly.JavaScript.ORDER_ATOMIC];
+};
+
+
+
+Blockly.JavaScript.graphics_setFontSize = function() {
+
+    var size = Blockly.JavaScript.valueToCode(this, 'size',
+        Blockly.JavaScript.ORDER_NONE) || 10;
+
+    return "g.setFontVector(" + size + "); \n";
 };
 
