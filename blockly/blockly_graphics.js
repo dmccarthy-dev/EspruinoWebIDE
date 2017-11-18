@@ -448,10 +448,7 @@ Blockly.JavaScript.graphics_drawRect = function() {
     var height = Blockly.JavaScript.valueToCode(this, 'height',
         Blockly.JavaScript.ORDER_NONE) || 30;
 
-    var x2 = parseInt(x) + parseInt( width );
-    var y2 = parseInt(y) + parseInt( height );
-
-    return "g.drawRect(" + x + ", " + y + ", " + x2 + ", " + y2 + "); \n" +
+    return "g.drawRect(" + x + ", " + y + ", " + x + " + " +width+ ", " + y + "+" + height + "); \n" +
         "g.flip();\n";
 };
 
@@ -467,10 +464,7 @@ Blockly.JavaScript.graphics_fillRect = function() {
     var height = Blockly.JavaScript.valueToCode(this, 'height',
         Blockly.JavaScript.ORDER_NONE) || 30;
 
-    var x2 = parseInt(x) + parseInt( width );
-    var y2 = parseInt(y) + parseInt( height );
-
-    return "g.fillRect(" + x + ", " + y + ", " + x2 + ", " + y2 + "); \n" +
+    return "g.fillRect(" + x + ", " + y + ", " + x + " + " +width+ ", " + y + "+" + height + "); \n" +
         "g.flip();\n";
 };
 
